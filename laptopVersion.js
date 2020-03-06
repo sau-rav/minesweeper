@@ -7,13 +7,13 @@ var dj = [-1,  0,  1,  1,  1,  0, -1, -1];
 function preload() {
   images = []; numbers = []; faces = [];
   for(let i = 0; i < loader.length; i++){
-    images[i] = loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/'+loader[i]+'.jpg');
+    images[i] = loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/image_data/'+loader[i]+'.jpg');
   }
   for(let i = 0; i < 10; i++){
-    numbers.push(loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/'+i+'.png'));
+    numbers.push(loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/image_data/'+i+'.png'));
   }
   for(let i = 0; i < 3; i++){
-    faces[i] = loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/'+faceLoader[i]+'.png');
+    faces[i] = loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/image_data/'+faceLoader[i]+'.png');
   }
 }
 
