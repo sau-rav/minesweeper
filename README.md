@@ -10,7 +10,7 @@
 
 -----
 #### Mobile version
-- Button support for flagging
+- Button support for flagging <br />
 ![alt text](https://github.com/sau-rav/minesweeper/blob/master/mobile/mobile_image.png)
 
 - To embed in HTML : <br />
