@@ -1,5 +1,5 @@
-var mineList, rectSize, boxList, beta, images = [], numbers = [], faces = [], faceSize, flagLeft, counter, numWidth, flagMode, start, mineIdxList, mineOverRide, end, explored, tempSec;
-var loader = ['imgInit', 'one', 'two', 'three', 'four', 'flag', 'mineNew', 'none', 'redMine'];
+var mineList, rectSize, boxList, beta, images = [], numbers = [], faces = [], faceSize, flagLeft, counter, numWidth, flagMode, start, mineIdxList, mineOverRide, end, explored, tempSec, flagMode, mobMode, beta;
+var loader = ['imgInit', 'one', 'two', 'three', 'four', 'flag', 'mineNew', 'none', 'greenFlag', 'redMine'];
 var faceLoader = ['smile', 'compFace', 'mineface'];
 var di = [-1, -1, -1,  0,  1,  1,  1,  0];
 var dj = [-1,  0,  1,  1,  1,  0, -1, -1];
@@ -42,14 +42,13 @@ function setNumbers(){
           if(i+di[k] >= 0 && i+di[k] < 9 && j+dj[k] >= 0 && j+dj[k] < 9){
             if(boxList[i+di[k]][j+dj[k]].mine == false){
               boxList[i+di[k]][j+dj[k]].number += 1;
-              if(boxList[i+di[k]][j+dj[k]].number > 4){
-                //console.log('yes i have been through this');
-                return false;
-              }
+              if(boxList[i+di[k]][j+dj[k]].number > 4){	
+	             console.log('yes i have been through this');	
+	             return false;	
+	          }
             }
           }
         }
-        //console.log(boxList);
       }
     }
   }
@@ -57,30 +56,29 @@ function setNumbers(){
 }
 
 function setup() {
-  var beta = 280;
-  size = 280;
+  var constraint = min(windowWidth, windowHeight);
+  beta = 0;
+  while(beta+70 <= constraint) beta = beta+70;
+  size = 280; 
   beta = beta/size; size = size*beta;
-  rectSize = 30*beta;
+  rectSize = 30*beta; mobMode = 40*beta;
   menu = 45*beta; faceSize = 40*beta; numWidth = 25*beta; faceX = 120*beta;
   offset = 5*beta; flagLeft = 10; counter = 0; explored = 0;
-  flagMode = false; start = false; mineOverRide = false; end = false;
-  createCanvas(size, size+menu);
+  flagMode = false; start = false; mineOverRide = false; end = false; flagMode = false;
+  createCanvas(size, size+menu+mobMode);
   boxList = []; mineIdxList = [];
   for(let i = 0; i < 9; i++)
     boxList.push([]);
   for(let i = offset; i < size-rectSize; i += rectSize){
     for(let j = menu+offset; j < size+rectSize; j += rectSize){
+      //console.log((j-menu-offset));
       boxList[(j-menu-offset)/rectSize].push(new Box(i, j, 0));
     }
   }
   plotMines();
   if(!setNumbers()) setup();
-  //console.log(boxList);
-  //console.clear();
   //console.log(mineIdxList);
-  //boxList[0][0].number = 3;
-  //console.log(checkConfig());
-  //console.log(mineIdxList);
+  console.log(checkConfig());
 }
 
 class Box{
@@ -98,7 +96,7 @@ class Box{
     if(this.showEmpty) this.state = 7;
     if(this.number > 0 && this.showNumber) this.state = this.number;
     if(mineOverRide && this.mine == true){
-      if(this.visited == true) this.state = 8;
+      if(this.visited == true) this.state = 9;
       else this.state = 6;
     }
     push();
@@ -184,7 +182,20 @@ function calcExplored(){
     }
   }
 }
-// added extra
+
+function flagModeButton(){
+  if(!flagMode){
+    image(images[5], faceX, size+menu-offset/2, faceSize, faceSize);
+    textSize(12*beta);
+    text('Flag mode : OFF', faceX + faceSize + offset, size + menu + 4.5*offset);
+  }
+  else{
+    image(images[8], faceX, size+menu-offset/2, faceSize, faceSize);
+    textSize(12*beta);
+    text('Flag mode : ON', faceX + faceSize + offset, size + menu + 4.5*offset);
+  }
+}
+
 function calcNearMines(i, j){
   //console.log("here");
   let ans = 0;
@@ -211,10 +222,10 @@ function checkConfig(){
   }
   return flagg;
 }
-// added 2 extra above
 
 function draw() {
   background(193);
+  flagModeButton();
   showBoxes();
   if(start && !end){
     if(tempSec != second()){
@@ -223,7 +234,6 @@ function draw() {
     }
   }
   showMenu();
-  
 }
 
 function showConnectedComponents(i, j){
@@ -261,16 +271,19 @@ function showConnectedComponents(i, j){
 }
 
 function mousePressed(){
-  if(mouseButton === RIGHT && !end){
-    for(let i = 0; i < 9; i++){
-      for(let j = 0; j < 9; j++){
-        boxList[i][j].isClicked(mouseX, mouseY, 0);
+  if(mouseX >= faceX && mouseX <= faceX+faceSize && mouseY >= size+menu-offset/2 && mouseY <= size+menu-offset/2+faceSize && !end){
+    flagMode = !flagMode;
+  }
+  else{
+    if(flagMode && !end){
+      for(let i = 0; i < 9; i++){
+        for(let j = 0; j < 9; j++){
+          boxList[i][j].isClicked(mouseX, mouseY, 0);
+        }
       }
     }
-  }
-  else if(mouseButton === LEFT){
-    if(mouseX >= faceX && mouseX <= faceX+faceSize && mouseY >= offset && mouseY <= offset+faceSize) setup();
-    if(!end){
+    else if(mouseX >= faceX && mouseX <= faceX+faceSize && mouseY >= offset && mouseY <= offset+faceSize) setup();
+    else if(!end){
       for(let i = 0; i < 9; i++){
         for(let j = 0; j < 9; j++){
           if(boxList[i][j].isClicked(mouseX, mouseY, 1)){
@@ -280,8 +293,6 @@ function mousePressed(){
           }
         }
       }
-      //calcExplored();
-      //console.log(explored);
     }
   }
 }
@@ -289,3 +300,4 @@ function mousePressed(){
 document.oncontextmenu = function() {
   return false;
 }
+

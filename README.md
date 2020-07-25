@@ -1,12 +1,17 @@
-# minesweeper
+## Minesweeper game made in p5<br>
 
-Minesweeper game made in p5<br>
-Laptop mode : use right click to flag<br>
-Mobile mode : use flag button to flag<br>
+------
+#### Laptop version <br />
+- Supports right click for flagging <br />
+![alt text](https://github.com/sau-rav/minesweeper/blob/master/laptop/laptop_image.png)
 
-Link for the laptop version: https://editor.p5js.org/saussage/present/IyUd7kvsB <br>
-Link for the mobile version: https://editor.p5js.org/saussage/present/FF0ZKRPpN <br>
+- To embed in HTML : <br />
+<iframe src="https://editor.p5js.org/saussage/embed/IyUd7kvsB"></iframe> <br />
 
-To embed in HTML : <br>
-<iframe src="https://editor.p5js.org/saussage/embed/IyUd7kvsB"></iframe> <br>
-<iframe src="https://editor.p5js.org/saussage/embed/FF0ZKRPpN"></iframe> <br>
+-----
+#### Mobile version
+- Button support for flagging
+![alt text](https://github.com/sau-rav/minesweeper/blob/master/mobile/mobile_image.png)
+
+- To embed in HTML : <br />
+<iframe src="https://editor.p5js.org/saussage/embed/FF0ZKRPpN"></iframe> <br />
