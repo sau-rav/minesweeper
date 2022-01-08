@@ -1,6 +1,6 @@
 var mineList, rectSize, boxList, beta, images = [], numbers = [], faces = [], faceSize, flagLeft, counter, numWidth, flagMode, start, mineIdxList, mineOverRide, end, explored, tempSec; 
 var loader = ['imgInit', 'one', 'two', 'three', 'four', 'flag', 'mineNew', 'none', 'redMine'];
-var faceLoader = ['smile', 'compFace', 'mineface', 'click'];
+var faceLoader = ['smile', 'compFace', 'mineface'];
 var di = [-1, -1, -1,  0,  1,  1,  1,  0];
 var dj = [-1,  0,  1,  1,  1,  0, -1, -1];
 
@@ -12,7 +12,7 @@ function preload() {
   for(let i = 0; i < 10; i++){
     numbers.push(loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/image_data/'+i+'.png'));
   }
-  for(let i = 0; i < 4; i++){
+  for(let i = 0; i < 3; i++){
     faces[i] = loadImage('https://raw.githubusercontent.com/sau-rav/minesweeper/master/image_data/'+faceLoader[i]+'.png');
   }
 }
